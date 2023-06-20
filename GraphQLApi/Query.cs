@@ -4,12 +4,15 @@ namespace GraphQLApi;
 
 public class Query
 {
+    [UseFiltering]
     public IQueryable<Author> GetAuthors(ApplicationDbContext context)
     {
         return context.Authors
             .Include(a => a.Books);
     }
 
+    //[UseFiltering]
+    [UseFiltering<BookFilterType>]
     public IQueryable<Book> GetBooks(ApplicationDbContext context)
     {
         return context.Books
