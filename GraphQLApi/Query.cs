@@ -1,15 +1,19 @@
-﻿namespace GraphQLApi;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace GraphQLApi;
 
 public class Query
 {
     public IQueryable<Author> GetAuthors(ApplicationDbContext context)
     {
-        return context.Authors;
+        return context.Authors
+            .Include(a => a.Books);
     }
 
     public IQueryable<Book> GetBooks(ApplicationDbContext context)
     {
-        return context.Books;
+        return context.Books
+            .Include(b => b.Author);
     }
 
     //public Book GetBook(BookService bookService) =>
