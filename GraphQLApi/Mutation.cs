@@ -2,13 +2,40 @@
 
 public class Mutation
 {
-    //[UseMutationConvention]
-    public Book AddBook(BookService bookService, string title, string author)
+    public async Task<Author> AddAuthor(ApplicationDbContext context, string name)
     {
-        var book = new Book(title, new Author(author));
+        var author = new Author(Guid.NewGuid(), name);
 
-        bookService.Books.Add(book);
+        await context.Authors.AddAsync(author);
+        await context.SaveChangesAsync();
+
+        return author;
+    }
+
+    public async Task<Book> AddBook(ApplicationDbContext context, string title, Guid authorId)
+    {
+        var author = await context.Authors.FindAsync(authorId);
+
+        if (author == null)
+        {
+            throw new ArgumentException($"Failed to find the author '{authorId}'.", nameof(authorId));
+        }
+
+        var book = new Book(Guid.NewGuid(), title, authorId) { Author = author };
+
+        await context.Books.AddAsync(book);
+        await context.SaveChangesAsync();
 
         return book;
     }
+
+    //[UseMutationConvention]
+    //public Book AddBook(BookService bookService, string title, string author)
+    //{
+    //    var book = new Book(title, new Author(author));
+
+    //    bookService.Books.Add(book);
+
+    //    return book;
+    //}
 }

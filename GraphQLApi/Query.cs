@@ -2,11 +2,21 @@
 
 public class Query
 {
-    public Book GetBook(BookService bookService) =>
-        bookService.Books.Last();
+    public IQueryable<Author> GetAuthors(ApplicationDbContext context)
+    {
+        return context.Authors;
+    }
 
-    public IEnumerable<Book> GetBooks(BookService bookService) =>
-        bookService.Books;
+    public IQueryable<Book> GetBooks(ApplicationDbContext context)
+    {
+        return context.Books;
+    }
+
+    //public Book GetBook(BookService bookService) =>
+    //    bookService.Books.Last();
+
+    //public IEnumerable<Book> GetBooks(BookService bookService) =>
+    //    bookService.Books;
 
     //public Book GetBook() =>
     //    new("C# in Depth", new Author("Jon Skeet"));
