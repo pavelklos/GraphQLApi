@@ -4,6 +4,7 @@
   "extensions": {
     "strawberryShake": {
       "name": "ConferenceClient",
+      "namespace": "GraphQLClient.Console.GraphQL",
       "url": "https://workshop.chillicream.com/graphql/",
       "records": {
         "inputs": false,
