@@ -1,4 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
+
+// [CS8618]
+// Non-nullable variable must contain a non-null value when exiting constructor.
+// Consider declaring it as nullable.
+#pragma warning disable CS8618
 
 namespace GraphQLApi;
 
@@ -15,6 +21,10 @@ public class ApplicationDbContext : DbContext
 
 public class Author
 {
+    public Author()
+    {
+    }
+
     public Author(Guid id, string name)
     {
         Id = id;
@@ -26,11 +36,15 @@ public class Author
 
     public string Name { get; set; }
 
-    public ICollection<Book> Books { get; }
+    public ICollection<Book> Books { get; set; }
 }
 
 public class Book
 {
+    public Book()
+    {
+    }
+
     public Book(Guid id, string title, Guid authorId)
     {
         Id = id;

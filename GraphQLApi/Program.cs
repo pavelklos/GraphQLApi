@@ -20,11 +20,13 @@ builder.Services.AddSingleton<BookService>();
 
 // GraphQL
 builder.Services.AddGraphQLServer()
+    .AddProjections()
     .AddFiltering()
     .AddSorting()
     .AddMutationConventions()
     .AddMutationType<Mutation>()
     .AddQueryType<Query>()
+    .AddType<BookType>()
     .RegisterService<BookService>()
     .RegisterDbContext<ApplicationDbContext>()
     .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true);

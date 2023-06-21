@@ -4,22 +4,28 @@ namespace GraphQLApi;
 
 public class Query
 {
+    [UseProjection]
     [UseFiltering]
     [UseSorting]
     public IQueryable<Author> GetAuthors(ApplicationDbContext context)
     {
-        return context.Authors
-            .Include(a => a.Books);
+        //return context.Authors
+        //    .Include(author => author.Books);
+        return context.Authors;
     }
 
+    //[UseFirstOrDefault]
+    //[UseSingleOrDefault]
+    [UseProjection]
     //[UseFiltering]
     [UseFiltering<BookFilterType>]
     //[UseSorting]
     [UseSorting<BookSortType>]
     public IQueryable<Book> GetBooks(ApplicationDbContext context)
     {
-        return context.Books
-            .Include(b => b.Author);
+        //return context.Books
+        //    .Include(book => book.Author);
+        return context.Books;
     }
 
     //public Book GetBook(BookService bookService) =>
