@@ -21,6 +21,7 @@ builder.Services.AddSingleton<BookService>();
 // GraphQL
 builder.Services.AddGraphQLServer()
     .AddFiltering()
+    .AddSorting()
     .AddMutationConventions()
     .AddMutationType<Mutation>()
     .AddQueryType<Query>()

@@ -5,6 +5,7 @@ namespace GraphQLApi;
 public class Query
 {
     [UseFiltering]
+    [UseSorting]
     public IQueryable<Author> GetAuthors(ApplicationDbContext context)
     {
         return context.Authors
@@ -13,6 +14,8 @@ public class Query
 
     //[UseFiltering]
     [UseFiltering<BookFilterType>]
+    //[UseSorting]
+    [UseSorting<BookSortType>]
     public IQueryable<Book> GetBooks(ApplicationDbContext context)
     {
         return context.Books
