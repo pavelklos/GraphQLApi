@@ -21,6 +21,7 @@ builder.Services.AddSingleton<BookService>();
 
 // GraphQL
 builder.Services.AddGraphQLServer()
+    .AddExportDirectiveType()
     //.AddDataLoader<AuthorBooksDataLoader>()
     //.AddDataLoader<AuthorDataLoader>()
     .AddProjections()
