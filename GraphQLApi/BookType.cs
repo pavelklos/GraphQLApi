@@ -25,16 +25,29 @@ public class BookType : ObjectType<Book>
         //    .Type<NonNullType<AuthorType>>();
 
         // Replace Field
+        //descriptor.Field(book => book.AuthorId)
+        //    .Name("authorReplaced")
+        //    .Resolve(async context =>
+        //    {
+        //        var keyValues = new object[] { context.Parent<Book>().AuthorId };
+        //        var cancellationToken = context.RequestAborted;
+
+        //        return await context.Service<ApplicationDbContext>().Authors.FindAsync(keyValues, cancellationToken);
+        //    })
+        //    .Serial()
+        //    .Type<NonNullType<AuthorType>>();
+
+        // for AuthorDataLoader
         descriptor.Field(book => book.AuthorId)
-            .Name("authorReplaced")
+            .Name("author")
             .Resolve(async context =>
             {
-                var keyValues = new object[] { context.Parent<Book>().AuthorId };
+                var key = context.Parent<Book>().AuthorId;
                 var cancellationToken = context.RequestAborted;
 
-                return await context.Service<ApplicationDbContext>().Authors.FindAsync(keyValues, cancellationToken);
+                return await context.DataLoader<AuthorDataLoader>().LoadAsync(key, cancellationToken);
             })
-            .Serial()
+            //.Serial()
             .Type<NonNullType<AuthorType>>();
     }
 }

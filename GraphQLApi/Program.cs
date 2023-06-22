@@ -20,6 +20,8 @@ builder.Services.AddSingleton<BookService>();
 
 // GraphQL
 builder.Services.AddGraphQLServer()
+    //.AddDataLoader<AuthorBooksDataLoader>()
+    //.AddDataLoader<AuthorDataLoader>()
     .AddProjections()
     .AddFiltering()
     .AddSorting()
