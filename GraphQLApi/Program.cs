@@ -1,4 +1,5 @@
 using GraphQLApi;
+using HotChocolate.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
 // *****************************************************************************
@@ -39,7 +40,11 @@ var app = builder.Build();
 // *****************************************************************************
 
 // GraphQL
-app.MapGraphQL();
+//app.MapGraphQL();
+app.MapGraphQL().WithOptions(new GraphQLServerOptions
+{
+    EnableBatching = true
+});
 
 // Minimal API
 app.MapGet("/", () => "Hello World!");
