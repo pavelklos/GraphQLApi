@@ -4,6 +4,7 @@
   "extensions": {
     "strawberryShake": {
       "name": "CryptoClient",
+      "namespace": "GraphQLClient.BlazorWebAssembly.GraphQL",
       "url": "https://demo.chillicream.com/graphql/",
       "records": {
         "inputs": false,
