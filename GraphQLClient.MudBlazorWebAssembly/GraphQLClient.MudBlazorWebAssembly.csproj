@@ -4,12 +4,47 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<StrawberryShake_State>$(MSBuildProjectExtensionsPath)berry</StrawberryShake_State>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <GraphQLConfig Include="CryptoClient\GetAssets.graphql" />
+	  <GraphQLConfig Include="CryptoClient\schema.extensions.graphql" />
+	  <GraphQLConfig Include="CryptoClient\schema.graphql" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.7" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.7" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
 		<PackageReference Include="MudBlazor" Version="6.0.13" />
+		<PackageReference Include="StrawberryShake.CodeGeneration.CSharp.Analyzers" Version="12.6.0" />
+		<PackageReference Include="StrawberryShake.Transport.Http" Version="12.6.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AdditionalFiles Remove="CryptoClient\schema.extensions.graphql" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AdditionalFiles Remove="CryptoClient\schema.graphql" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AdditionalFiles Remove="CryptoClient\.graphqlrc.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <GraphQL Remove="CryptoClient\GetAssets.graphql" />
+	  <GraphQL Remove="GetAssets.graphql" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <GraphQLConfig Remove="CryptoClient\.graphqlrc.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="CryptoClient\GetAssets.graphql" />
 	</ItemGroup>
 	
 	

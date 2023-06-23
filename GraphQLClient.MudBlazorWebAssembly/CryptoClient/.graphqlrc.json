@@ -1,0 +1,21 @@
+{
+  "schema": "schema.graphql",
+  "documents": "**/*.graphql",
+  "extensions": {
+    "strawberryShake": {
+      "name": "CryptoClient",
+      "namespace": "Client.GraphQL",
+      "url": "https://demo.chillicream.com/graphql/",
+      "records": {
+        "inputs": false,
+        "entities": false
+      },
+      "transportProfiles": [
+        {
+          "default": "Http",
+          "subscription": "WebSocket"
+        }
+      ]
+    }
+  }
+}
