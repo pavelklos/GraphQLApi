@@ -1,5 +1,5 @@
-﻿query GetAssets {
-  assets {
+﻿query GetAssets50 {
+  assets(first: 50) {
     nodes {
       name
       price {

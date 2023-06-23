@@ -10,10 +10,11 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 // Strawberry Shake generator produced Client, but also components that we can use in Blazor
 // - [CryptoClient.Client.cs] client generated in folder '\obj\Debug\net8.0\berry'
-//   - we can use extension AddCryptoClient() on IServiceCollection
-//   - add new CryptoClient to dependency injection
+//   - we can use generated extension AddCryptoClient() on IServiceCollection
+//   - add CryptoClient to dependency injection
 builder.Services
     .AddCryptoClient()
-    .ConfigureHttpClient(client => client.BaseAddress = new Uri("https://demo.chillicream.com/graphql"));
+    .ConfigureHttpClient(client =>
+        client.BaseAddress = new Uri("https://demo.chillicream.com/graphql"));
 
 await builder.Build().RunAsync();

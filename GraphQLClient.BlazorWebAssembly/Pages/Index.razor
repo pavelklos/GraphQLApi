@@ -1,7 +1,56 @@
 ﻿@page "/"
+@using GraphQLClient.BlazorWebAssembly.Dtos;
+@inject CryptoClient _cryptoClient
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+@* <h1>Hello, world!</h1> *@
+@* Welcome to your new app. *@
 
-Welcome to your new app.
+<a href="https://demo.chillicream.com/graphql" target="_blank">
+    GraphQL API : demo.chillicream.com
+</a>
+
+<p>
+    <small>query called at: <b>@now.ToUniversalTime()</b></small>
+</p>
+
+<hr />
+
+<ul>
+    @foreach (var item in assets)
+    {
+        <li>@item.Name (<b>@item.LastPrice)</b></li>
+    }
+</ul>
+
+<p class="bg-info border border-dark p-2 mb-4 rounded"
+   style="background-color: lightsteelblue !important">
+    GraphQL API Server + GraphQL Client
+</p>
+
+@code {
+    List<AssetDto> assets = new List<AssetDto>();
+    DateTime now = DateTime.Now;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // IOperationResult<IGetAssetsResult> operationResult = await _cryptoClient.GetAssets.ExecuteAsync();
+        // IGetAssetsResult? data = operationResult.Data;
+        var result = await _cryptoClient.GetAssets50.ExecuteAsync();
+        var data = result.Data;
+        if (data?.Assets?.Nodes?.Count > 0)
+        {
+            assets = data.Assets.Nodes.Select(asset => new AssetDto
+                {
+                    Name = asset.Name,
+                    LastPrice = asset.Price.LastPrice
+                }).ToList();
+        }
+        else
+        {
+            assets.Clear();
+        }
+        now = DateTime.Now;
+    }
+}

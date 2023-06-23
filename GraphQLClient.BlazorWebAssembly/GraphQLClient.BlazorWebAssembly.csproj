@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <GraphQL Remove="GetAssets.graphql" />
+    <GraphQL Remove="GetAssets50.graphql" />
   </ItemGroup>
 
   <ItemGroup>
