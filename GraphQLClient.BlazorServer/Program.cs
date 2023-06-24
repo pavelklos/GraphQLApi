@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using GraphQLClient.BlazorServer.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+
+builder.Services
+    .AddCryptoClient()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://demo.chillicream.com/graphql"));
+    //.ConfigureHttpClient(c => c.BaseAddress = new Uri("https://api-crypto-workshop.chillicream.com/graphql"))
+    //.ConfigureWebSocketClient(c => c.Uri = new Uri("wss://api-crypto-workshop.chillicream.com/graphql"));
 
 var app = builder.Build();
 

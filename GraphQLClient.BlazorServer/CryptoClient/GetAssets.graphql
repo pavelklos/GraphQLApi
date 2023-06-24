@@ -1,5 +1,5 @@
 query GetAssets {
-  assets(order: { price: { marketCap: DESC } }) {
+  assets(first: 20, order: { price: { marketCap: DESC } }) {
     nodes {
       ...AssetInfo
     }

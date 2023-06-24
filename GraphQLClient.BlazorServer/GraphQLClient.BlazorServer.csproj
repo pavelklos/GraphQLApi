@@ -11,6 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="obj\Debug\net8.0\berry\CryptoClient.Client.cs" />
+    <Compile Include="obj\Debug\net8.0\berry\CryptoClient.Components.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="StrawberryShake.Blazor" Version="13.2.1" />
   </ItemGroup>
 
