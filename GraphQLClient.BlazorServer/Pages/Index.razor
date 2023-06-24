@@ -3,7 +3,7 @@
 
 <PageTitle>Index</PageTitle>
 
-<UseGetAssets Context="result" Strategy="ExecutionStrategy.CacheAndNetwork">
+<UseGetAssets Context="result" Strategy="ExecutionStrategy.CacheFirst">
 @* <UseGetAssets Context="result"> *@
     <ChildContent>
         <small>GraphQL query executed at: <b>@DateTime.Now.ToLongTimeString()</b></small>

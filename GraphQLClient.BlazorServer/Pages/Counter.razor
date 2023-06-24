@@ -1,18 +1,58 @@
 ﻿@page "/counter"
+@using System.Globalization;
 
 <PageTitle>Counter</PageTitle>
 
+<UseGetAssets Context="result" Strategy="ExecutionStrategy.CacheFirst">
+    @* <UseGetAssets Context="result"> *@
+    <ChildContent>
+        <small>GraphQL query executed at: <b>@DateTime.Now.ToLongTimeString()</b></small>
+        <hr />
+        @if (result.Assets?.Nodes is not null)
+        {
+            <ul>
+                @foreach (var asset in result.Assets.Nodes.Take(10))
+                {
+                    <li>
+                        [<b style="color: crimson !important">
+                            @* @String.Format("{0:0,0.00}", Math.Round(asset.Price.MarketCap, 2)) *@
+                            @PrintCurrencyUS(asset.Price.MarketCap)
+                        </b>]
+                        <b style="color: steelblue !important">
+                            @asset.Name
+                        </b>
+                        @* (<b>@asset.Price.LastPrice USD</b>) *@
+                        @* (<b>@String.Format("{0:0,0.00}", Math.Round(asset.Price.LastPrice, 2)) USD</b>) *@
+                        @* (<b>@Math.Round(asset.Price.LastPrice, 2).ToString("#,##0.00") USD</b>) *@
+                        (<b> @PrintCurrencyUS(asset.Price.LastPrice) </b>)
+                    </li>
+                }
+            </ul>
+        }
+    </ChildContent>
+    <LoadingContent>
+        Loading ...
+    </LoadingContent>
+</UseGetAssets>
+
+<hr />
+
 <h1>Counter</h1>
-
 <p role="status">Current count: @currentCount</p>
-
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 @code {
     private int currentCount = 0;
-
     private void IncrementCount()
     {
         currentCount++;
+    }
+
+    public static string PrintCurrencyUS(double number)
+    {
+        // var cultureInfo = CultureInfo.GetCultureInfo("en-GB");
+        var cultureInfo = CultureInfo.GetCultureInfo("en-US");
+        var formattedAmount = String.Format(cultureInfo, "{0:C}", number);
+        return formattedAmount;
     }
 }
