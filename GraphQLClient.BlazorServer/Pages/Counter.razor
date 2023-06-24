@@ -3,6 +3,64 @@
 
 <PageTitle>Counter</PageTitle>
 
+<style>
+    input {
+        font-size: 1.25rem;
+        font-weight: bold;
+        width: 120px;
+    }
+
+    .classMinus {
+        color: rgb(220, 20, 60) !important;
+        background-color: rgba(220, 20, 60, 0.25) !important;
+        border: 2px solid rgb(220, 20, 60) !important;
+        border-radius: 2px;
+        text-align: right;
+        padding-right: 0.5rem;
+    }
+
+    .classPlus {
+        color: rgb(0,128,0) !important;
+        background-color: rgba(0,128,0, 0.25) !important;
+        border: 2px solid rgb(0,128,0) !important;
+        border-radius: 2px;
+        text-align: left;
+        padding-left: 0.5rem;
+    }
+</style>
+
+@* CHECK ALL SYMBOLS *@
+<UseOnPriceChange Context="result">
+    <ChildContent>
+        <h3>
+            <b style="font-size: 0.95rem; margin-right: 10px">
+                @DateTime.Now.ToLongTimeString()
+            </b>
+            <b style="color: steelblue !important">
+                @result.OnPriceChange.Symbol
+            </b>
+            @result.OnPriceChange.LastPrice
+        </h3>
+        @* <h4>@LastPriceSymbol</h4> *@
+        <input @bind="LastPriceSymbol" style="color: steelblue !important" readonly />
+        <input @bind="LastPriceBefore" style="color: lightgray !important" readonly />
+        <input @bind="LastPriceAfter" readonly />
+        <input @bind="LastPriceDifference" readonly class="@(LastPriceDifference < 0 ? "classMinus" : "classPlus")" />
+        @if (result.OnPriceChange.Symbol == "BTC")
+        {
+            LastPriceSymbol = result.OnPriceChange.Symbol;
+            LastPriceBefore = LastPriceAfter;
+            LastPriceAfter = result.OnPriceChange.LastPrice;
+            if (LastPriceBefore > 0)
+            {
+                LastPriceDifference = Math.Round(LastPriceAfter - LastPriceBefore, 2);
+            }
+        }
+    </ChildContent>
+</UseOnPriceChange>
+
+<hr />
+
 <UseGetAssets Context="result" Strategy="ExecutionStrategy.CacheFirst">
     @* <UseGetAssets Context="result"> *@
     <ChildContent>
@@ -25,6 +83,9 @@
                         @* (<b>@String.Format("{0:0,0.00}", Math.Round(asset.Price.LastPrice, 2)) USD</b>) *@
                         @* (<b>@Math.Round(asset.Price.LastPrice, 2).ToString("#,##0.00") USD</b>) *@
                         (<b> @PrintCurrencyUS(asset.Price.LastPrice) </b>)
+                        <b style="color: steelblue !important">
+                            @asset.Price.Symbol
+                        </b>
                     </li>
                 }
             </ul>
@@ -42,17 +103,27 @@
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 @code {
-    private int currentCount = 0;
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
-
     public static string PrintCurrencyUS(double number)
     {
         // var cultureInfo = CultureInfo.GetCultureInfo("en-GB");
         var cultureInfo = CultureInfo.GetCultureInfo("en-US");
         var formattedAmount = String.Format(cultureInfo, "{0:C}", number);
         return formattedAmount;
+    }
+
+    private string? LastPriceSymbol { get; set; } = "BTC";
+    private double LastPriceBefore { get; set; } = 0;
+    private double LastPriceAfter { get; set; } = 0;
+    public double LastPriceDifference { get; set; } = 0;
+    private double lastPriceBtc = 0;
+    private void SetLastPrice(double lastPrice)
+    {
+        lastPriceBtc = lastPrice;
+    }
+
+    private int currentCount = 0;
+    private void IncrementCount()
+    {
+        currentCount++;
     }
 }

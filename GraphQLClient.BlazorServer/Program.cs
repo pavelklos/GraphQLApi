@@ -9,9 +9,10 @@ builder.Services.AddSingleton<WeatherForecastService>();
 
 builder.Services
     .AddCryptoClient()
-    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://demo.chillicream.com/graphql"));
-    //.ConfigureHttpClient(c => c.BaseAddress = new Uri("https://api-crypto-workshop.chillicream.com/graphql"))
-    //.ConfigureWebSocketClient(c => c.Uri = new Uri("wss://api-crypto-workshop.chillicream.com/graphql"));
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://demo.chillicream.com/graphql"))
+    .ConfigureWebSocketClient(c => c.Uri = new Uri("wss://demo.chillicream.com/graphql"));
+//.ConfigureHttpClient(c => c.BaseAddress = new Uri("https://api-crypto-workshop.chillicream.com/graphql"))
+//.ConfigureWebSocketClient(c => c.Uri = new Uri("wss://api-crypto-workshop.chillicream.com/graphql"));
 
 var app = builder.Build();
 
