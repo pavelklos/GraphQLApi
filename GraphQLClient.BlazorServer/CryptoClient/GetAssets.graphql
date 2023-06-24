@@ -16,6 +16,7 @@ fragment AssetInfo on Asset {
 
 fragment AssetPrice on AssetPrice {
   id
+  symbol
   lastPrice
   marketCap
 }

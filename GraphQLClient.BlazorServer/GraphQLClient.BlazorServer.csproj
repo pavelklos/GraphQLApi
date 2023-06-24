@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <GraphQL Remove="cryptoclient\GetAssets.graphql" />
+    <GraphQL Remove="cryptoclient\OnPriceChange.graphql" />
   </ItemGroup>
 
   <ItemGroup>
