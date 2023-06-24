@@ -6,4 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <GraphQL Remove="cryptoclient\GetAssets.graphql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StrawberryShake.Blazor" Version="13.2.1" />
+  </ItemGroup>
+
 </Project>
