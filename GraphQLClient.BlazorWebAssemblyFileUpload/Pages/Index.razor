@@ -1,7 +1,53 @@
 ﻿@page "/"
+@inject UploadProfilePictureMutation UploadProfilePicture;
+
+@code {
+    private string? Url = null;
+
+    private async Task UploadProfilePictureAsync(InputFileChangeEventArgs args)
+    {
+        // Info (File, Mutation)
+        FileInfo = $"{args.File.Name} : {args.File.ContentType} : {args.File.Size} bytes";
+
+        // Execute Mutation on GraphQL API Server endpoint
+        await using var stream = args.File.OpenReadStream();
+        var profilePicture = new Upload(stream, args.File.Name);
+        var result = await UploadProfilePicture.ExecuteAsync(profilePicture);
+        if (result.IsSuccessResult())
+        {
+            Url = result.Data?.UpdateUserProfile.UpdatedUser?.ImageUrl;
+            MutationInfo = Url;
+        }
+        else
+        {
+            MutationInfo = result.Errors?.FirstOrDefault()?.Message;
+        }
+    }
+
+    // Infos
+    private string? FileInfo = null;
+    private string? MutationInfo = null;
+}
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<UseGetUserInfo Context="result" Strategy="ExecutionStrategy.CacheFirst">
+    <LoadingContent>
+        User data is being loaded ...
+    </LoadingContent>
+    <ChildContent>
+        <UserInfo User="@result.Me" />
+    </ChildContent>
+</UseGetUserInfo>
 
-Welcome to your new app.
+@* <User /> *@
+
+<hr />
+
+<b>Change Profile Picture:</b>
+<InputFile OnChange="@UploadProfilePictureAsync" />
+
+<hr />
+
+<p>@FileInfo</p>
+<p>@MutationInfo</p>
