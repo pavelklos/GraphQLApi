@@ -20,7 +20,8 @@ builder.Services.AddSingleton<BookService>();
 //builder.Services.AddTransient<BookService>();
 
 // GraphQL
-builder.Services.AddGraphQLServer()
+builder.Services
+    .AddGraphQLServer()
     .AddExportDirectiveType()
     //.AddDataLoader<AuthorBooksDataLoader>()
     //.AddDataLoader<AuthorDataLoader>()
@@ -32,6 +33,11 @@ builder.Services.AddGraphQLServer()
     .AddQueryType<Query>()
     //.AddType<AuthorType>()
     //.AddType<BookType>()
+    //.AddQueryType<QueryFU>() // File Upload
+    //.AddMutationType<MutationFU>() // File Upload
+    //.AddType<UploadType>() // File Upload
+    //.AddTypeExtension<AuthorExtensions>() // File Upload
+
     .RegisterService<BookService>()
     .RegisterDbContext<ApplicationDbContext>()
     .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true);
@@ -39,6 +45,9 @@ builder.Services.AddGraphQLServer()
 // *****************************************************************************
 var app = builder.Build();
 // *****************************************************************************
+
+// File Upload
+app.UseStaticFiles();
 
 // GraphQL
 //app.MapGraphQL();
@@ -99,3 +108,6 @@ if (app.Environment.IsDevelopment())
 // *****************************************************************************
 app.Run();
 // *****************************************************************************
+
+
+
